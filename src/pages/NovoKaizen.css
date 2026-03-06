@@ -1,0 +1,95 @@
+/* Container principal para centralizar o formulário */
+.form-container {
+  max-width: 500px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-top: 5px solid #004a99; /* Azul Sodecia */
+}
+
+.form-container h2 {
+  color: #004a99;
+  margin-bottom: 20px;
+  text-align: center;
+  font-family: sans-serif;
+}
+
+/* Estilização dos campos */
+.form-container form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.form-container input, 
+.form-container textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.form-container input:focus, 
+.form-container textarea:focus {
+  border-color: #004a99;
+}
+
+.form-container textarea {
+  height: 120px;
+  resize: none;
+}
+
+/* Botão de Envio */
+.form-container button {
+  background-color: #004a99;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 4px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.form-container button:hover {
+  background-color: #003366;
+}
+
+/* Mensagem de sucesso/erro rápida */
+.form-container p {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.form-container textarea {
+  height: 80px; /* Diminuí de 120px para 80px para caber os dois melhor */
+  resize: none;
+}
+
+.input-file {
+  margin: 10px 0 20px 0;
+  padding: 10px;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  width: 100%;
+  cursor: pointer;
+  background: #fafafa;
+}
+
+.input-file:hover {
+  border-color: #004a99;
+  background: #f0f7ff;
+}
+
+/* Ajuste no botão de enviar para quando estiver desativado */
+button:disabled {
+  background-color: #ccc !important;
+  cursor: not-allowed;
+}

@@ -1,0 +1,135 @@
+.navbar {
+  background-color: #004a99;
+  padding: 0.8rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Espaçamento uniforme entre os itens */
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  transition: opacity 0.2s;
+}
+
+.navbar-links a:hover {
+  opacity: 0.8;
+}
+
+.btn-nav-novo {
+  background: #ffffff;
+  color: #004a99 !important;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: bold;
+  transition: background 0.3s !important;
+}
+
+.btn-nav-novo:hover {
+  background: #e6e6e6 !important;
+}
+
+/* Estilizando o botão de Sair para parecer um link */
+.btn-logout {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.4);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: 0.3s;
+}
+
+.btn-logout:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: white;
+}
+
+.navbar {
+  background-color: #004a99;
+  padding: 0.8rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.navbar-brand {
+  font-size: 1.2rem;
+  letter-spacing: 1px;
+}
+
+.navbar-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.navbar-links a {
+  color: white;
+  text-decoration: none;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: opacity 0.2s;
+}
+
+/* Estilo Especial para o Link de Ranking */
+.link-ranking {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #ffca28 !important; /* Cor dourada para o Ranking */
+  font-weight: bold !important;
+  padding: 5px 10px;
+  border-radius: 4px;
+  transition: background 0.3s !important;
+}
+
+.link-ranking:hover {
+  background: rgba(255, 202, 40, 0.1);
+  opacity: 1 !important;
+}
+
+.btn-nav-novo {
+  background: #ffffff;
+  color: #004a99 !important;
+  padding: 8px 16px;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.btn-nav-novo:hover {
+  background: #e6e6e6 !important;
+}
+
+.btn-logout {
+  background: none;
+  border: 1px solid rgba(255,255,255,0.4);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: 0.3s;
+}
+
+.btn-logout:hover {
+  background: rgba(255,255,255,0.1);
+  border-color: white;
+}
