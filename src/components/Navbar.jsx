@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../services/supabase';
 import { Link } from 'react-router-dom';
-import { ModalPerfil } from './ModalPerfil'; // <--- A LINHA QUE FALTAVA
+import { ModalPerfil } from './ModalPerfil' // <--- A LINHA QUE FALTAVA
 import './Navbar.css';
 
 export function Navbar() {
