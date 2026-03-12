@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { supabase } from '../services/supabase';
 import { Link } from 'react-router-dom';
+import { ModalPerfil } from './ModalPerfil'; // <--- A LINHA QUE FALTAVA
 import './Navbar.css';
 
 export function Navbar() {
@@ -61,14 +62,17 @@ export function Navbar() {
             {userAdmin && <Link to="/dashboard">Painel Admin</Link>}
             <Link to="/novo" className="btn-nav-novo">Sugerir Melhoria</Link>
             
-            {/* Avatar que abre o modal */}
-            <div className="user-menu" onClick={() => setIsModalOpen(true)}>
+            {/* Clique aqui abre o Modal */}
+            <div className="user-menu" onClick={() => setIsModalOpen(true)} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '10px' }}>
               <img 
-                src={perfil?.avatar_url || 'https://via.placeholder.com/150'} 
+                src={perfil?.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${session.user.id}`} 
                 alt="Perfil" 
                 className="nav-avatar" 
+                style={{ width: '35px', height: '35px', borderRadius: '50%', border: '2px solid white' }}
               />
-              <span className="nav-username">{perfil?.nome_completo?.split(' ')[0]}</span>
+              <span className="nav-username" style={{ color: 'white' }}>
+                {perfil?.nome_completo?.split(' ')[0] || 'Usuário'}
+              </span>
             </div>
 
             <button onClick={handleLogout} className="btn-logout">Sair</button>
@@ -78,19 +82,13 @@ export function Navbar() {
         )}
       </div>
 
-      {/* Aqui entrará o componente ModalPerfil que criaremos a seguir */}
-      // ... (dentro do return da Navbar)
-<div className="user-menu" onClick={() => setIsModalOpen(true)}>
-  <img src={perfil?.avatar_url || '...'} className="nav-avatar" />
-  <span>{perfil?.nome_completo}</span>
-</div>
-
-<ModalPerfil 
-  isOpen={isModalOpen} 
-  onClose={() => setIsModalOpen(false)} 
-  perfil={perfil}
-  onUpdate={(novoPerfil) => setPerfil(novoPerfil)}
-/>
+      {/* COMPONENTE CHAMADO AQUI */}
+      <ModalPerfil 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        perfil={perfil}
+        onUpdate={(novoPerfil) => setPerfil(novoPerfil)}
+      />
     </nav>
   );
 }
