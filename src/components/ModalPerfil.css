@@ -188,3 +188,16 @@
     cursor: not-allowed;
     border-color: #eee !important;
   }
+
+  label {
+    display: flex;
+    align-items: center;
+    gap: 8px; /* Espaço entre o ícone e o texto */
+    font-weight: 600;
+    margin-top: 10px;
+    color: #444;
+  }
+  
+  label svg {
+    color: #004a99; /* Cor azul da Sodecia nos ícones */
+  }
