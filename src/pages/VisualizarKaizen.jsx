@@ -19,7 +19,14 @@ export function VisualizarKaizen() {
           .select(`
             *,
             perfis (
-              nome_completo
+              id,
+              nome_completo,
+              avatar_url,
+              cpf,
+              cep,
+              bairro,
+              cidade,
+              endereco
             )
           `)
           .eq('id', id)
@@ -91,8 +98,42 @@ export function VisualizarKaizen() {
     <div className="view-container">
       <header className="view-header">
         <button className="btn-voltar" onClick={() => navigate('/dashboard')}>⬅ Voltar</button>
-        <h2>Detalhes da Melhoria</h2>
+        <h2>Painel de Aprovação</h2>
       </header>
+
+      {/* NOVO: Cartão de Informações do Autor (Perfil) */}
+      <div className="autor-card-completo">
+        <div className="autor-header">
+          <img 
+            src={kaizen.perfis?.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${kaizen.perfis?.id}`} 
+            alt="Avatar" 
+            className="autor-foto"
+          />
+          <div className="autor-principal">
+            <h3>{kaizen.perfis?.nome_completo || 'Colaborador não identificado'}</h3>
+            <p><strong>CPF:</strong> {kaizen.perfis?.cpf || 'Não informado'}</p>
+          </div>
+        </div>
+        
+        <div className="autor-endereco-grid">
+          <div className="info-item">
+            <span>CEP</span>
+            <p>{kaizen.perfis?.cep || '-'}</p>
+          </div>
+          <div className="info-item">
+            <span>Cidade</span>
+            <p>{kaizen.perfis?.cidade || '-'}</p>
+          </div>
+          <div className="info-item">
+            <span>Bairro</span>
+            <p>{kaizen.perfis?.bairro || '-'}</p>
+          </div>
+          <div className="info-item">
+            <span>Logradouro</span>
+            <p>{kaizen.perfis?.endereco || '-'}</p>
+          </div>
+        </div>
+      </div>
 
       <div className="kaizen-details-card">
         <div className="card-header">
@@ -101,8 +142,6 @@ export function VisualizarKaizen() {
             {kaizen.status || 'pendente'}
           </span>
         </div>
-        
-        <p className="autor-info"><strong>Colaborador:</strong> {kaizen.perfis?.nome_completo || 'Sem Nome'}</p>
         
         <div className="comparativo-fotos">
           <div className="foto-box">
@@ -136,7 +175,7 @@ export function VisualizarKaizen() {
       {kaizen.status !== 'concluido' && (
         <form onSubmit={handleFinalizarKaizen} className="form-concluir-admin">
           <h3>Finalizar Implementação</h3>
-          <p>Tire uma foto do local/processo após a melhoria ter sido feita.</p>
+          <p>Tire uma foto do local após a melhoria.</p>
           
           <div className="file-upload-wrapper">
             <label htmlFor="foto-depois" className="custom-file-upload">
@@ -150,7 +189,6 @@ export function VisualizarKaizen() {
               onChange={e => setFotoDepois(e.target.files[0])} 
               required
             />
-            {fotoDepois && <span className="file-name-display">{fotoDepois.name}</span>}
           </div>
 
           <button type="submit" disabled={concluindo} className="btn-concluir">
