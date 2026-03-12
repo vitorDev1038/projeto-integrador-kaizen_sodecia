@@ -97,3 +97,19 @@
 .rank-1 { background: #fffdf2; }
 .rank-1 .posicao { color: #d4af37; font-size: 1.3rem; }
 .rank-1 .avatar-simulado { background: #d4af37; }
+
+.ranking-avatar {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #004a99;
+  margin: 0 10px;
+}
+
+/* Se quiser dar um destaque para o 1º lugar */
+.rank-1 .ranking-avatar {
+  border-color: #ffd700;
+  width: 55px;
+  height: 55px;
+}

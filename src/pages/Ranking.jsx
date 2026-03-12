@@ -10,12 +10,12 @@ export function Ranking() {
     async function buscarRanking() {
       setLoading(true);
       
-      // Buscamos todos os perfis e TODOS os kaizens de uma vez
-      // O Supabase entende 'kaizens(status)' se houver a FK
       const { data, error } = await supabase
         .from('perfis')
         .select(`
+          id,
           nome_completo,
+          avatar_url,
           kaizens (
             status
           )
@@ -24,16 +24,14 @@ export function Ranking() {
       if (error) {
         console.error("Erro no ranking:", error.message);
       } else if (data) {
-        // Agora filtramos e contamos aqui no Front-end
         const listaFormatada = data
           .map(p => ({
+            id: p.id,
             nome: p.nome_completo,
-            // Conta quantos kaizens esse perfil tem com status 'concluido'
+            foto: p.avatar_url,
             total: p.kaizens ? p.kaizens.filter(k => k.status === 'concluido').length : 0
           }))
-          // Remove quem tem 0 ideias para o ranking ficar limpo
           .filter(item => item.total > 0)
-          // Ordena do maior para o menor
           .sort((a, b) => b.total - a.total);
 
         setLideres(listaFormatada);
@@ -56,9 +54,16 @@ export function Ranking() {
       <div className="ranking-card">
         {lideres.length > 0 ? (
           lideres.map((user, index) => (
-            <div key={index} className={`ranking-item rank-${index + 1}`}>
+            <div key={user.id} className={`ranking-item rank-${index + 1}`}>
               <span className="posicao">{index + 1}º</span>
-              <div className="avatar-simulado">{user.nome.charAt(0)}</div>
+              
+              {/* Substituído avatar-simulado pela foto real ou DiceBear */}
+              <img 
+                src={user.foto || `https://api.dicebear.com/7.x/avataaars/svg?seed=${user.id}`} 
+                alt={user.nome} 
+                className="ranking-avatar"
+              />
+
               <span className="nome">{user.nome}</span>
               <span className="pontos"><strong>{user.total}</strong> {user.total === 1 ? 'Ideia' : 'Ideias'}</span>
               <span className="medalha">
