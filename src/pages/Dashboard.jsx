@@ -44,7 +44,6 @@ export function Dashboard() {
 
   async function carregarKaizens() {
     setLoading(true);
-    // Buscando Kaizens + Dados do Perfil (incluindo avatar_url)
     const { data, error } = await supabase
       .from('kaizens')
       .select(`*, perfis (nome_completo, avatar_url)`) 
@@ -72,7 +71,7 @@ export function Dashboard() {
     }
   }
 
-  // --- RECOLOCANDO A LÓGICA DE FILTRO E PAGINAÇÃO (O QUE ESTAVA FALTANDO) ---
+  // --- LÓGICA DE FILTRO E PAGINAÇÃO (FUNDAMENTAL PARA CORRIGIR O ERRO) ---
   const kaizensFiltrados = kaizens.filter(k => {
     if (filtro === 'todos') return true;
     return (k.status || 'pendente') === filtro;
@@ -131,7 +130,7 @@ export function Dashboard() {
                 <td className="autor-col">
                   <div className="autor-info">
                     <img 
-                      src={k.perfis?.avatar_url || 'https://api.dicebear.com/7.x/avataaars/svg?seed=' + k.id} 
+                      src={k.perfis?.avatar_url || `https://api.dicebear.com/7.x/avataaars/svg?seed=${k.id}`} 
                       alt="" 
                       className="table-avatar"
                     />
