@@ -77,3 +77,26 @@
     border-radius: 6px;
     cursor: pointer;
   }
+
+  /* src/components/ModalPerfil.css */
+.form-row {
+    display: flex;
+    gap: 15px;
+    width: 100%;
+  }
+  
+  .form-row > div {
+    flex: 1;
+  }
+  
+  .input-readonly {
+    background-color: #f0f0f0;
+    cursor: not-allowed;
+    color: #666;
+  }
+  
+  .avatar-upload small {
+    color: #004a99;
+    font-weight: bold;
+    margin-top: 5px;
+  }
