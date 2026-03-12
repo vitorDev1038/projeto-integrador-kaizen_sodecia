@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { supabase } from '../services/supabase';
 import './ModalPerfil.css';
-import { User, CreditCard, MapPin, Home, Hash, Camera, Save, X } from 'lucide-react';
 
 export function ModalPerfil({ isOpen, onClose, perfil, onUpdate }) {
   const [loading, setLoading] = useState(false);
@@ -22,7 +21,6 @@ export function ModalPerfil({ isOpen, onClose, perfil, onUpdate }) {
   const handleCEPChange = async (e) => {
     let cep = e.target.value.replace(/\D/g, "");
     if (cep.length > 8) cep = cep.slice(0, 8);
-    
     const maskedCEP = cep.replace(/^(\d{5})(\d)/, "$1-$2");
     setFormData(prev => ({ ...prev, cep: maskedCEP }));
 
@@ -30,7 +28,6 @@ export function ModalPerfil({ isOpen, onClose, perfil, onUpdate }) {
       try {
         const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`);
         const data = await response.json();
-        
         if (!data.erro) {
           setFormData(prev => ({
             ...prev,
@@ -88,48 +85,41 @@ export function ModalPerfil({ isOpen, onClose, perfil, onUpdate }) {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2><User size={24} /> Editar Meu Perfil</h2>
+        <h2>Editar Meu Perfil</h2>
         <form onSubmit={handleSave}>
           <div className="avatar-upload">
-            <label htmlFor="file-input" className="avatar-label">
+            <label htmlFor="file-input">
               <img src={formData.avatar_url || 'https://via.placeholder.com/150'} alt="Avatar" />
-              <div className="camera-icon-overlay">
-                <Camera size={20} color="white" />
-              </div>
             </label>
             <input id="file-input" type="file" accept="image/*" onChange={handleUpload} style={{ display: 'none' }} />
           </div>
 
-          <label><User size={18} /> Nome Completo</label>
+          <label>Nome Completo</label>
           <input type="text" value={formData.nome_completo} onChange={e => setFormData({...formData, nome_completo: e.target.value})} required />
 
           <div className="form-row">
             <div>
-              <label><CreditCard size={18} /> CPF</label>
+              <label>CPF</label>
               <input type="text" value={formData.cpf || ''} onChange={handleCPFChange} maxLength="14" placeholder="000.000.000-00" />
             </div>
             <div>
-              <label><Hash size={18} /> CEP</label>
-              <input type="text" value={formData.cep || ''} onChange={handleCEPChange} placeholder="00000-000" />
+              <label>CEP</label>
+              <input type="text" value={formData.cep || ''} onChange={handleCEPChange} placeholder="00000-00" />
             </div>
           </div>
 
-          <label><MapPin size={18} /> Cidade</label>
+          <label>Cidade</label>
           <input type="text" value={formData.cidade || ''} readOnly className="input-readonly" />
 
-          <label><Home size={18} /> Bairro</label>
+          <label>Bairro</label>
           <input type="text" value={formData.bairro || ''} onChange={e => setFormData({...formData, bairro: e.target.value})} />
 
-          <label><MapPin size={18} /> Rua / Logradouro</label>
+          <label>Rua / Logradouro</label>
           <input type="text" value={formData.endereco || ''} onChange={e => setFormData({...formData, endereco: e.target.value})} />
 
           <div className="modal-actions">
-            <button type="button" onClick={onClose} className="btn-cancelar">
-              <X size={18} /> Cancelar
-            </button>
-            <button type="submit" className="btn-salvar" disabled={loading}>
-              <Save size={18} /> {loading ? 'Salvando...' : 'Salvar Alterações'}
-            </button>
+            <button type="button" onClick={onClose} className="btn-cancelar">Cancelar</button>
+            <button type="submit" className="btn-salvar" disabled={loading}>{loading ? 'Salvando...' : 'Salvar Alterações'}</button>
           </div>
         </form>
       </div>
