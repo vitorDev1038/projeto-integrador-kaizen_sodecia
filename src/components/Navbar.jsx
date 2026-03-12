@@ -79,6 +79,18 @@ export function Navbar() {
       </div>
 
       {/* Aqui entrará o componente ModalPerfil que criaremos a seguir */}
+      // ... (dentro do return da Navbar)
+<div className="user-menu" onClick={() => setIsModalOpen(true)}>
+  <img src={perfil?.avatar_url || '...'} className="nav-avatar" />
+  <span>{perfil?.nome_completo}</span>
+</div>
+
+<ModalPerfil 
+  isOpen={isModalOpen} 
+  onClose={() => setIsModalOpen(false)} 
+  perfil={perfil}
+  onUpdate={(novoPerfil) => setPerfil(novoPerfil)}
+/>
     </nav>
   );
 }
