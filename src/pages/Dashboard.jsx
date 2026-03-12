@@ -8,6 +8,10 @@ export function Dashboard() {
   const [filtro, setFiltro] = useState('todos');
   const [loading, setLoading] = useState(true);
   const [stats, setStats] = useState({ total: 0, pendentes: 0, concluidos: 0 });
+  
+  // --- NOVOS ESTADOS PARA PAGINAÇÃO ---
+  const [paginaAtual, setPaginaAtual] = useState(1);
+  const itensPorPagina = 10;
 
   const navigate = useNavigate();
 
@@ -67,10 +71,23 @@ export function Dashboard() {
     }
   }
 
-  const kaizensExibidos = kaizens.filter(k => {
+  // --- LÓGICA DE FILTRO E PAGINAÇÃO ---
+  const kaizensFiltrados = kaizens.filter(k => {
     if (filtro === 'todos') return true;
     return (k.status || 'pendente') === filtro;
   });
+
+  // Cálculo dos índices para fatiar a array
+  const ultimoItem = paginaAtual * itensPorPagina;
+  const primeiroItem = ultimoItem - itensPorPagina;
+  const kaizensExibidos = kaizensFiltrados.slice(primeiroItem, ultimoItem);
+  const totalPaginas = Math.ceil(kaizensFiltrados.length / itensPorPagina);
+
+  // Resetar para página 1 quando mudar o filtro
+  const mudarFiltro = (novoFiltro) => {
+    setFiltro(novoFiltro);
+    setPaginaAtual(1);
+  };
 
   if (loading) return <div className="loading-container">Carregando painel Sodecia...</div>;
 
@@ -92,7 +109,7 @@ export function Dashboard() {
           <button 
             key={f}
             className={filtro === f ? 'active' : ''} 
-            onClick={() => setFiltro(f)}
+            onClick={() => mudarFiltro(f)}
           >
             {f === 'todos' ? 'Todos' : f === 'pendente' ? 'Pendentes' : 'Concluídos'}
           </button>
@@ -112,7 +129,7 @@ export function Dashboard() {
           <tbody>
             {kaizensExibidos.map((k) => (
               <tr key={k.id}>
-                <td>{k.perfis?.nome_completo || '---'}</td>
+                <td className="autor-col">{k.perfis?.nome_completo || '---'}</td>
                 <td><strong>{k.titulo}</strong></td>
                 <td>
                   <span className={`status-tag ${k.status || 'pendente'}`}>
@@ -121,11 +138,9 @@ export function Dashboard() {
                 </td>
                 <td>
                   <div className="acoes-area">
-                    {/* O Olho agora é o link principal para ver e gerenciar */}
                     <Link to={`/kaizen/${k.id}`} className="btn-acao-link" title="Ver Detalhes">
                       {k.status === 'concluido' ? '👁️' : '✅'}
                     </Link>
-
                     <button className="btn-delete" onClick={() => excluirKaizen(k.id, k.titulo)}>
                       🗑️
                     </button>
@@ -136,6 +151,38 @@ export function Dashboard() {
           </tbody>
         </table>
       </div>
+
+      {/* --- COMPONENTE DE PAGINAÇÃO --- */}
+      {totalPaginas > 1 && (
+        <div className="pagination">
+          <button 
+            disabled={paginaAtual === 1}
+            onClick={() => setPaginaAtual(prev => prev - 1)}
+            className="pag-btn"
+          >
+            &laquo; Anterior
+          </button>
+          
+          {[...Array(totalPaginas)].map((_, i) => (
+            <button
+              key={i + 1}
+              onClick={() => setPaginaAtual(i + 1)}
+              className={`pag-number ${paginaAtual === i + 1 ? 'active' : ''}`}
+              aria-label={`Ir para página ${i + 1}`}
+            >
+              {i + 1}
+            </button>
+          ))}
+
+          <button 
+            disabled={paginaAtual === totalPaginas}
+            onClick={() => setPaginaAtual(prev => prev + 1)}
+            className="pag-btn"
+          >
+            Próximo &raquo;
+          </button>
+        </div>
+      )}
     </div>
   );
 }
