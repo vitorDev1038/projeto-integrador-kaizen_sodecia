@@ -366,3 +366,20 @@
   border-color: #004a99;
   box-shadow: 0 4px 10px rgba(0, 74, 153, 0.2);
 }
+
+/* Na Navbar.css */
+.user-menu {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  padding: 5px 10px;
+  border-radius: 20px;
+  transition: background 0.3s;
+}
+.user-menu:hover { background: rgba(255,255,255,0.1); }
+.nav-avatar { width: 35px; height: 35px; border-radius: 50%; object-fit: cover; border: 2px solid white; }
+
+/* No Dashboard.css */
+.autor-info { display: flex; align-items: center; gap: 12px; }
+.table-avatar { width: 30px; height: 30px; border-radius: 50%; object-fit: cover; }
