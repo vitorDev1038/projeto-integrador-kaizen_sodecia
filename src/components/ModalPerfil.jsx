@@ -18,6 +18,19 @@ export function ModalPerfil({ isOpen, onClose, perfil, onUpdate }) {
     if (perfil) setFormData(perfil);
   }, [perfil]);
 
+  // --- LÓGICA DA BARRA DE PROGRESSO ---
+  const camposParaVerificar = [
+    formData.nome_completo,
+    formData.cpf,
+    formData.cep,
+    formData.cidade,
+    formData.avatar_url,
+    formData.bairro,
+    formData.endereco
+  ];
+  const preenchidos = camposParaVerificar.filter(c => c && c.length > 5).length; 
+  const progresso = Math.round((preenchidos / camposParaVerificar.length) * 100);
+
   const handleCEPChange = async (e) => {
     let cep = e.target.value.replace(/\D/g, "");
     if (cep.length > 8) cep = cep.slice(0, 8);
@@ -75,7 +88,7 @@ export function ModalPerfil({ isOpen, onClose, perfil, onUpdate }) {
     if (!error) {
       onUpdate(formData);
       onClose();
-      alert('Perfil atualizado!');
+      alert('Perfil atualizado com sucesso! 🎉');
     }
     setLoading(false);
   };
@@ -85,41 +98,53 @@ export function ModalPerfil({ isOpen, onClose, perfil, onUpdate }) {
   return (
     <div className="modal-overlay">
       <div className="modal-content">
-        <h2>Editar Meu Perfil</h2>
+        <h2>👤 Editar Meu Perfil</h2>
+
+        {/* BARRA DE PROGRESSO */}
+        <div className="progress-wrapper">
+          <div className="progress-bar-bg">
+            <div className="progress-bar-fill" style={{ width: `${progresso}%` }}></div>
+          </div>
+          <small>{progresso}% do perfil preenchido</small>
+        </div>
+
         <form onSubmit={handleSave}>
           <div className="avatar-upload">
             <label htmlFor="file-input">
               <img src={formData.avatar_url || 'https://via.placeholder.com/150'} alt="Avatar" />
+              <div className="camera-badge">📸</div>
             </label>
             <input id="file-input" type="file" accept="image/*" onChange={handleUpload} style={{ display: 'none' }} />
           </div>
 
-          <label>Nome Completo</label>
+          <label>📝 Nome Completo</label>
           <input type="text" value={formData.nome_completo} onChange={e => setFormData({...formData, nome_completo: e.target.value})} required />
 
           <div className="form-row">
             <div>
-              <label>CPF</label>
+              <label>💳 CPF</label>
               <input type="text" value={formData.cpf || ''} onChange={handleCPFChange} maxLength="14" placeholder="000.000.000-00" />
             </div>
             <div>
-              <label>CEP</label>
-              <input type="text" value={formData.cep || ''} onChange={handleCEPChange} placeholder="00000-00" />
+              <label>🔢 CEP</label>
+              <input type="text" value={formData.cep || ''} onChange={handleCEPChange} placeholder="00000-000" />
             </div>
           </div>
 
-          <label>Cidade</label>
+          <label>🏙️ Cidade</label>
           <input type="text" value={formData.cidade || ''} readOnly className="input-readonly" />
 
-          <label>Bairro</label>
+          <label>🏘️ Bairro</label>
           <input type="text" value={formData.bairro || ''} onChange={e => setFormData({...formData, bairro: e.target.value})} />
 
-          <label>Rua / Logradouro</label>
+          <label>📍 Rua / Logradouro</label>
           <input type="text" value={formData.endereco || ''} onChange={e => setFormData({...formData, endereco: e.target.value})} />
 
           <div className="modal-actions">
-            <button type="button" onClick={onClose} className="btn-cancelar">Cancelar</button>
-            <button type="submit" className="btn-salvar" disabled={loading}>{loading ? 'Salvando...' : 'Salvar Alterações'}</button>
+            <button type="button" onClick={onClose} className="btn-cancelar">Sair</button>
+            <button type="submit" className="btn-salvar" disabled={loading}>
+              {loading ? 'Salvando...' : '💾 Salvar Alterações'}
+            </button>
           </div>
         </form>
       </div>
